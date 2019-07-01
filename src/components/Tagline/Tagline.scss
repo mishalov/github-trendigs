@@ -1,0 +1,26 @@
+@import "../../styles/variables.scss";
+
+.tagline {
+  margin-top: 16px;
+  font-size: 12px;
+  display: flex;
+
+  &__item {
+    img {
+      margin-right: 6px;
+    }
+  }
+  &__item:not(:last-child) {
+    padding-right: 8px;
+    border-right: 1px solid $dark-border-color;
+  }
+
+  &__item:not(:first-child) {
+    padding-left: 8px;
+  }
+
+  &__stargazers {
+    display: flex;
+    align-items: center;
+  }
+}

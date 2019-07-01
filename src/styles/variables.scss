@@ -1,0 +1,15 @@
+@mixin for-mobile {
+  @media (max-width: 744px) {
+    @content;
+  }
+}
+
+@mixin for-desktop {
+  @media (min-width: 745px) {
+    @content;
+  }
+}
+
+$main-ui-color: #0052cc;
+$border-color: #e1e4e8;
+$dark-border-color: #9da0a3;

@@ -1,0 +1,39 @@
+@import "./styles/variables.scss";
+.app {
+  @include for-desktop {
+    display: flex;
+    width: 100%;
+    margin: 56px 0px;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.repos-list {
+  .repos-list__title {
+    @include for-mobile {
+      text-align: center;
+      font-size: 20px;
+    }
+    @include for-desktop {
+      font-size: 24px;
+    }
+  }
+  &__header {
+    padding: 52px 36px;
+  }
+  @include for-mobile {
+    height: 100%;
+  }
+  @include for-desktop {
+    width: 654px;
+    border-radius: 10px;
+    box-shadow: 0 24px 64px 0 rgba(0, 0, 0, 0.12);
+  }
+
+  &__content {
+  }
+}
+
+body {
+  width: 100%;
+}

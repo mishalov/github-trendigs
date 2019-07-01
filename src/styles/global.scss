@@ -1,0 +1,17 @@
+@import "../assets/fonts/GraphikRBCLC-Medium/GraphikRBCLC-Medium.css";
+@import "../assets/fonts/GraphikRBCLC/GraphikRBCLC.css";
+@import "./variables.scss";
+@import "./reset.css";
+
+* {
+  font-family: GraphikRBCLC;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: GraphikRBCLC-Medium;
+}

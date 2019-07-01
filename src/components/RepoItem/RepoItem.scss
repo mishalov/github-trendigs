@@ -1,0 +1,44 @@
+@import "../../styles/variables.scss";
+
+.repo-item {
+  width: 100%;
+  padding: 16px 36px;
+  border-top: 1px solid $border-color;
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @include for-mobile() {
+      a {
+        display: block;
+        padding: 4px 0px;
+      }
+    }
+  }
+  &__title-divider {
+    padding: 0px 8px;
+    @include for-mobile() {
+      display: none;
+    }
+  }
+  &__description {
+    text-align: justify;
+    line-height: 22px;
+    padding-top: 8px;
+    word-wrap: break-word;
+    word-break: normal;
+  }
+  &__star {
+    font-size: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    img {
+      margin-right: 8px;
+    }
+  }
+}
