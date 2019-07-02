@@ -8,6 +8,10 @@
 
   &--disabled {
     background-color: $col-secondary-element;
-    color: $col-primary-font;
+    color: inherit;
+  }
+
+  &--success {
+    background-color: $col-success-element;
   }
 }

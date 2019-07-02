@@ -1,103 +1,57 @@
 import React from "react";
 import "./app.scss";
-import { TRepo, TOwner } from "github-trendings/types";
+import { TRepo } from "github-trendings/types";
 import { objectKeysToCamelCase } from "./utils/toCamelCase";
 import RepoItem from "./components/RepoItem";
 import Loader from "./components/Loader";
 import Pagination from "./components/Pagination";
 import { withRouter, RouteComponentProps } from "react-router";
+import dayjs from "dayjs";
+import { Repo } from "./class/Repo";
+import { Owner } from "./class/Owner";
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
-
-class Repo implements TRepo {
-  public id: number;
-  public name: string;
-  public fullName: string;
-  public htmlUrl: string;
-  public description: string;
-  public language: string | null;
-  public stargazersCount: number;
-  public owner: TOwner;
-  public forks: number;
-  [name: string]: number | string | TOwner | null;
-
-  constructor(param: any) {
-    /*
-      checking if param fields have no undefined value;
-      null value is availabe for language field
-    */
-    Object.keys(this).forEach((key: string) => {
-      if (param[key] === undefined) {
-        throw new Error(
-          `Parameter of Repo class constructor has no ${key} field value`
-        );
-      }
-    });
-
-    this.id = param.id;
-    this.name = param.name;
-    this.fullName = param.fullName;
-    this.htmlUrl = param.htmlUrl;
-    this.description = param.description;
-    this.language = param.language;
-    this.stargazersCount = param.stargazersCount;
-    this.owner = param.owner;
-    this.forks = param.forks;
-  }
-}
-
-class Owner implements TOwner {
-  public login: string;
-  public avatarUrl: string;
-  public htmlUrl: string;
-  constructor(param: any) {
-    /*
-      checking if param fields have no undefined value;
-      null value is availabe for language field
-    */
-    Object.keys(this).forEach((key: string) => {
-      if (param[key] === undefined) {
-        throw new Error(
-          `Parameter of Repo class constructor has no ${key} field value`
-        );
-      }
-    });
-    this.login = param.login;
-    this.avatarUrl = param.name;
-    this.htmlUrl = param.htmlUrl;
-  }
-}
 
 interface IAppProps extends RouteComponentProps {}
 
 interface IAppState {
   repos: TRepo[];
   loading: boolean;
+  stars: number[];
 }
 
 class App extends React.Component<IAppProps, IAppState> {
-  state = {
+  state: IAppState = {
     repos: [],
-    loading: true
+    loading: true,
+    stars: []
   };
 
-  componentDidMount() {
-    this.updateRepoList();
+  public get currentPage(): number {
+    const { match } = this.props;
+    const page = Number(
+      match && match.params ? (match.params as any).page! : 1
+    );
+    return page;
   }
 
-  componentDidUpdate(prevProps: IAppProps) {
-    const { props } = this;
-    if (props.match.params && (props.match.params as any).page) {
-      const prevPage =
-        prevProps.match.params && (prevProps.match.params as any).page;
-      const page = (props.match.params as any).page;
-      if (prevPage !== page) this.updateRepoList();
+  public componentDidMount() {
+    const stars = localStorage.getItem("stars");
+    if (stars) {
+      this.setState({ stars: JSON.parse(stars) });
     }
+    this.updateRepoList(this.currentPage);
+    this.props.history.listen(location => {
+      const rawPathname = location.pathname;
+      const rawPageNumber = rawPathname !== "/" ? rawPathname[1] : 0;
+      const page = !isNaN(rawPageNumber as number) ? Number(rawPageNumber) : 0;
+      this.updateRepoList(page);
+    });
   }
 
-  updateRepoList = async () => {
+  public updateRepoList = async (page: number) => {
     this.setState({ loading: true });
-    const response = await this.fetchRepos();
+    const response = await this.fetchRepos(page);
     const body = objectKeysToCamelCase(response);
     if (!body.items || !Array.isArray(body.items)) {
       alert("Recieved data structure was not corrent!");
@@ -112,11 +66,12 @@ class App extends React.Component<IAppProps, IAppState> {
     this.setState({ repos, loading: false });
   };
 
-  fetchRepos = async () => {
-    const { match } = this.props;
-    const page = Number(match.params ? (match.params as any).page! : 1);
+  public fetchRepos = async (page: number) => {
+    const dateWeekAgo = dayjs(new Date())
+      .subtract(1, "week")
+      .format("YYYY-MM-DD");
     const rawResponse = await fetch(
-      `https://api.github.com/search/repositories?q=created:>2017-01-10&sort=stars&order=desc?page=${page}&per_page=10`
+      `https://api.github.com/search/repositories?q=created:>${dateWeekAgo}&sort=stars&order=desc&page=${page}&per_page=10`
     );
     if (rawResponse.status > 300) {
       alert(
@@ -126,10 +81,22 @@ class App extends React.Component<IAppProps, IAppState> {
     return JSON.parse(await rawResponse.text());
   };
 
-  render() {
-    const { repos, loading } = this.state;
-    const { match } = this.props;
-    const page = Number(match.params ? (match.params as any).page! : 1);
+  public makeStar = (repoId: number) => {
+    const { stars } = this.state;
+    let newStars = [...stars];
+    const indexNow = stars.indexOf(repoId);
+    if (indexNow !== -1) {
+      newStars = newStars.filter(starredId => starredId !== repoId);
+    } else {
+      newStars.push(repoId);
+    }
+    this.setState({ stars: newStars });
+    localStorage.setItem("stars", JSON.stringify(stars));
+  };
+
+  public render() {
+    const { repos, loading, stars } = this.state;
+    const page = this.currentPage;
     return (
       <div className="app">
         <section className="repos-list">
@@ -144,7 +111,12 @@ class App extends React.Component<IAppProps, IAppState> {
             ) : (
               <>
                 {repos.map((repo: TRepo) => (
-                  <RepoItem repoInfo={repo} key={`repo-item-${repo.id}`} />
+                  <RepoItem
+                    repoInfo={repo}
+                    key={`repo-item-${repo.id}`}
+                    starThis={this.makeStar}
+                    starred={stars.indexOf(repo.id) !== -1}
+                  />
                 ))}
                 <Pagination pageNow={page} />
               </>

@@ -9,6 +9,8 @@ declare module "github-trendings/types" {
     stargazersCount: number;
     forks: number;
     owner: TOwner;
+    stargazersUrl: string;
+    forksUrl: string;
   };
 
   export declare type TOwner = {

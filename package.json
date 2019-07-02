@@ -12,6 +12,10 @@
     "@types/react-router-dom": "^4.3.4",
     "@types/whatwg-fetch": "^0.0.33",
     "classnames": "^2.2.6",
+    "dayjs": "^1.8.14",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "enzyme-to-json": "^3.3.5",
     "es6-promise": "^4.2.8",
     "isomorphic-fetch": "^2.2.1",
     "node-sass": "^4.12.0",
@@ -42,6 +46,11 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
     ]
   }
 }

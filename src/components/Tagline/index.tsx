@@ -2,6 +2,7 @@ import React from "react";
 import starBlack from "../../assets/svg/star_black.svg";
 import fork from "../../assets/svg/fork.svg";
 import "./Tagline.scss";
+import { divideNumbers } from "../../utils/divideNumbers";
 
 interface ITaglineProps {
   language: string | null;
@@ -26,11 +27,11 @@ const Tagline: React.FC<ITaglineProps> = props => {
         title="Total stargazers"
       >
         <img src={starBlack} width="12" height="12" alt="star" />
-        {stargazersCount}
+        {divideNumbers(stargazersCount)}
       </div>
       <div className="tagline__item" title="Forks">
         <img src={fork} width="12" height="12" alt="forks" />
-        {forks}
+        {divideNumbers(forks)}
       </div>
     </div>
   );

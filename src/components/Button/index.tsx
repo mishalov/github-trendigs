@@ -4,16 +4,14 @@ import "./Button.scss";
 
 interface IButtonProps {
   onClick?: () => void;
-  disabled?: boolean;
+  status?: "disabled" | "success" | "normal";
 }
 
 const Button: React.FC<IButtonProps> = props => {
-  const { onClick, children, disabled } = props;
+  const { onClick, children } = props;
+  const status = props.status || "normal";
   return (
-    <button
-      className={cn("button", { "button--disabled": disabled })}
-      onClick={onClick}
-    >
+    <button className={cn("button", `button--${status}`)} onClick={onClick}>
       {children}
     </button>
   );

@@ -12,7 +12,7 @@ const Pagination: React.FC<IPaginationProps> = ({ pageNow }) => (
     Page:
     <div className="pagination-item">
       <Link to={"/1"}>
-        <Button disabled={pageNow === 1}>1</Button>
+        <Button status={pageNow === 1 || 0 ? "disabled" : "normal"}>1</Button>
       </Link>
     </div>
     <div className="pagination-item">
@@ -20,7 +20,7 @@ const Pagination: React.FC<IPaginationProps> = ({ pageNow }) => (
         <div className="pagination-item__placeholder"> ... </div>
       ) : (
         <Link to={"/2"}>
-          <Button disabled={pageNow === 2}>2</Button>
+          <Button status={pageNow === 2 ? "disabled" : "normal"}>2</Button>
         </Link>
       )}
     </div>
@@ -31,18 +31,18 @@ const Pagination: React.FC<IPaginationProps> = ({ pageNow }) => (
         </Link>
       ) : (
         <Link to={"/3"}>
-          <Button disabled={pageNow === 3}>3</Button>
+          <Button status={pageNow === 3 ? "disabled" : "normal"}>3</Button>
         </Link>
       )}
     </div>
     <div className="pagination-item">
       {pageNow > 3 ? (
         <Link to={`${pageNow}`}>
-          <Button disabled={true}>{pageNow}</Button>
+          <Button status="disabled">{pageNow}</Button>
         </Link>
       ) : (
         <Link to={"/4"}>
-          <Button disabled={pageNow === 4}>4</Button>
+          <Button status={pageNow === 4 ? "disabled" : "normal"}>4</Button>
         </Link>
       )}
     </div>
@@ -53,7 +53,7 @@ const Pagination: React.FC<IPaginationProps> = ({ pageNow }) => (
         </Link>
       ) : (
         <Link to={"/5"}>
-          <Button disabled={pageNow === 5}>5</Button>
+          <Button status={pageNow === 5 ? "disabled" : "normal"}>5</Button>
         </Link>
       )}
     </div>

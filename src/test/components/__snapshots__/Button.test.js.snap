@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Button /> rendering primary button with text and onClick renders correctly 1`] = `
+<button
+  className="button button--normal"
+  onClick={[Function]}
+/>
+`;
+
+exports[`<Button /> rendering renders correctly 1`] = `
+<button
+  className="button button--normal"
+/>
+`;
+
+exports[`<Button /> rendering with text and DISABLED status renders correctly 1`] = `
+<button
+  className="button button--disabled"
+>
+  test
+</button>
+`;
+
+exports[`<Button /> rendering with text and SUCCESS status renders correctly 1`] = `
+<button
+  className="button button--success"
+>
+  test
+</button>
+`;
+
+exports[`<Button /> rendering with text renders correctly 1`] = `
+<button
+  className="button button--normal"
+>
+  test
+</button>
+`;

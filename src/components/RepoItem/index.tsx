@@ -7,10 +7,12 @@ import Tagline from "../Tagline";
 
 interface IRepoItemProps {
   repoInfo: TRepo;
+  starred: boolean;
+  starThis: (repoId: number) => void;
 }
 
 const RepoItem = (props: IRepoItemProps) => {
-  const { repoInfo } = props;
+  const { repoInfo, starThis, starred } = props;
   const {
     name,
     owner,
@@ -18,10 +20,14 @@ const RepoItem = (props: IRepoItemProps) => {
     description,
     language,
     stargazersCount,
-    forks
+    forks,
+    id
   } = repoInfo;
-  const { login, avatarUrl } = owner;
+  const { login } = owner;
   const ownerHtmlUrl = owner.htmlUrl;
+  const handleStarClick = () => {
+    starThis(id);
+  };
   return (
     <article className="repo-item">
       <header className="repo-item__header">
@@ -34,9 +40,13 @@ const RepoItem = (props: IRepoItemProps) => {
             {name}
           </a>
         </h1>
-        <Button onClick={() => {}}>
+        <Button
+          onClick={handleStarClick}
+          status={starred ? "success" : "normal"}
+        >
           <div className="repo-item__star">
-            <img alt="star" src={star} width="12" height="12" /> Star
+            <img alt="star" src={star} width="12" height="12" />
+            {starred ? "starred" : "star"}
           </div>
         </Button>
       </header>
