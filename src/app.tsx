@@ -4,6 +4,8 @@ import { TRepo, TOwner } from "github-trendings/types";
 import { objectKeysToCamelCase } from "./utils/toCamelCase";
 import RepoItem from "./components/RepoItem";
 import Loader from "./components/Loader";
+import Pagination from "./components/Pagination";
+import { withRouter, RouteComponentProps } from "react-router";
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 
@@ -66,42 +68,68 @@ class Owner implements TOwner {
   }
 }
 
-interface IAppProps {}
+interface IAppProps extends RouteComponentProps {}
 
 interface IAppState {
   repos: TRepo[];
+  loading: boolean;
 }
 
 class App extends React.Component<IAppProps, IAppState> {
   state = {
     repos: [],
-    filter: {
-      language: "",
-      starred: ""
-    }
+    loading: true
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.updateRepoList();
+  }
+
+  componentDidUpdate(prevProps: IAppProps) {
+    const { props } = this;
+    if (props.match.params && (props.match.params as any).page) {
+      const prevPage =
+        prevProps.match.params && (prevProps.match.params as any).page;
+      const page = (props.match.params as any).page;
+      if (prevPage !== page) this.updateRepoList();
+    }
+  }
+
+  updateRepoList = async () => {
+    this.setState({ loading: true });
     const response = await this.fetchRepos();
     const body = objectKeysToCamelCase(response);
+    if (!body.items || !Array.isArray(body.items)) {
+      alert("Recieved data structure was not corrent!");
+      return;
+    }
     const repos = body.items.map((repo: any) => {
       const normalizedRepo = new Repo(repo);
       const normalizedOwner = new Owner(normalizedRepo.owner);
       normalizedRepo.owner = normalizedOwner;
       return normalizedRepo;
     });
-    this.setState({ repos });
-  }
+    this.setState({ repos, loading: false });
+  };
 
   fetchRepos = async () => {
+    const { match } = this.props;
+    const page = Number(match.params ? (match.params as any).page! : 1);
     const rawResponse = await fetch(
-      "https://api.github.com/search/repositories?q=created:>2017-01-10&sort=stars&order=desc"
+      `https://api.github.com/search/repositories?q=created:>2017-01-10&sort=stars&order=desc?page=${page}&per_page=10`
     );
+    if (rawResponse.status > 300) {
+      alert(
+        "Network error! Possible situation : Github query limit was exceeded (10 per minute)"
+      );
+    }
     return JSON.parse(await rawResponse.text());
   };
 
   render() {
-    const { repos } = this.state;
+    const { repos, loading } = this.state;
+    const { match } = this.props;
+    const page = Number(match.params ? (match.params as any).page! : 1);
     return (
       <div className="app">
         <section className="repos-list">
@@ -110,14 +138,16 @@ class App extends React.Component<IAppProps, IAppState> {
               List of trending repositories in GitHub
             </h1>
           </header>
-
           <div className="repos-list__content">
-            {repos.length > 0 ? (
-              repos.map((repo: TRepo) => (
-                <RepoItem repoInfo={repo} key={`repo-item-${repo.id}`} />
-              ))
-            ) : (
+            {loading ? (
               <Loader>Loading...</Loader>
+            ) : (
+              <>
+                {repos.map((repo: TRepo) => (
+                  <RepoItem repoInfo={repo} key={`repo-item-${repo.id}`} />
+                ))}
+                <Pagination pageNow={page} />
+              </>
             )}
           </div>
         </section>
@@ -126,4 +156,4 @@ class App extends React.Component<IAppProps, IAppState> {
   }
 }
 
-export default App;
+export default withRouter(App);

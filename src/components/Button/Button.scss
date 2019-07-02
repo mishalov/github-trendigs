@@ -5,4 +5,9 @@
   border-radius: 3px;
   padding: 8px 12px;
   border-style: none;
+
+  &--disabled {
+    background-color: $col-secondary-element;
+    color: $col-primary-font;
+  }
 }

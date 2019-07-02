@@ -1,14 +1,19 @@
 import React from "react";
+import cn from "classnames";
 import "./Button.scss";
 
 interface IButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
+  disabled?: boolean;
 }
 
 const Button: React.FC<IButtonProps> = props => {
-  const { onClick, children } = props;
+  const { onClick, children, disabled } = props;
   return (
-    <button className="button" onClick={onClick}>
+    <button
+      className={cn("button", { "button--disabled": disabled })}
+      onClick={onClick}
+    >
       {children}
     </button>
   );

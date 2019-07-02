@@ -22,4 +22,9 @@ declare module "github-trendings/types" {
     created: string;
     starred: boolean;
   };
+
+  export declare type IMultiselectItem = {
+    title: string;
+    value: string;
+  };
 }
