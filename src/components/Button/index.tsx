@@ -7,6 +7,9 @@ interface IButtonProps {
   status?: "disabled" | "success" | "normal";
 }
 
+/**
+ * Ordinary button component
+ */
 const Button: React.FC<IButtonProps> = props => {
   const { onClick, children } = props;
   const status = props.status || "normal";

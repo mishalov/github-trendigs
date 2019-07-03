@@ -7,6 +7,9 @@ interface IPaginationProps {
   pageNow: number;
 }
 
+/**
+ * Element of 5 buttons to change pages of application
+ */
 const Pagination: React.FC<IPaginationProps> = ({ pageNow }) => (
   <div className="pagination">
     Page:

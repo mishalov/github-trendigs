@@ -1,5 +1,11 @@
 import { TOwner } from "github-trendings/types";
 
+/**
+ * Class to represent owner of Repo in application
+ * @field login - Username in Github
+ * @field avatarUrl - URL of user's avatar
+ * @field htmlUrl - link to user's page in Github
+ */
 export class Owner implements TOwner {
   public login: string;
   public avatarUrl: string;

@@ -10,6 +10,9 @@ interface ITaglineProps {
   forks: number;
 }
 
+/**
+ * Component to show meta info of repository in Repo list
+ */
 const Tagline: React.FC<ITaglineProps> = props => {
   const { language, stargazersCount, forks } = props;
   return (

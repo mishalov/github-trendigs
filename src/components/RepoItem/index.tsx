@@ -11,6 +11,9 @@ interface IRepoItemProps {
   starThis: (repoId: number) => void;
 }
 
+/**
+ * Component to show Repo info in Repositories list
+ */
 const RepoItem = (props: IRepoItemProps) => {
   const { repoInfo, starThis, starred } = props;
   const {

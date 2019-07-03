@@ -1,5 +1,20 @@
 import { TRepo, TOwner } from "github-trendings/types";
 
+/**
+ * Class to represent Repo in application
+ * @field id - Id of Repo in Github
+ * @field name - Name of Github Repo
+ * @field fullName - Username and Repo name concated with slash
+ * @field htmlUrl - Link to Repo in Github
+ * @field description - Description of Repo
+ * @field language - name of programming language or technology
+ * @field stargazersCount - Count of Stars in Github
+ * @field owner - Object of Repo's owner
+ * @field forks - count of forks
+ * @field stargazersUrl - API URL, metainfo of stars
+ * @field forksUrl - Same as previous, but for forks
+ * TODO: You can make preview of users, who starred this repo
+ */
 export class Repo implements TRepo {
   public id: number;
   public name: string;

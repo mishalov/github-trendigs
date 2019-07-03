@@ -1,6 +1,9 @@
 import React from "react";
 import "./Loader.scss";
 
+/**
+ * Loader, use if you want user to wait something
+ */
 const Loader: React.FC = props => (
   <div className="loader__wrapper">
     <div className="loader">
