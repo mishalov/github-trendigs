@@ -42,7 +42,7 @@ const Pagination: React.FC<IPaginationProps> = ({ pageNow }) => (
         </Link>
       ) : (
         <Link to={"/4"}>
-          <Button status={pageNow === 4 ? "disabled" : "normal"}>4</Button>
+          <Button status={"normal"}>4</Button>
         </Link>
       )}
     </div>
@@ -53,7 +53,7 @@ const Pagination: React.FC<IPaginationProps> = ({ pageNow }) => (
         </Link>
       ) : (
         <Link to={"/5"}>
-          <Button status={pageNow === 5 ? "disabled" : "normal"}>5</Button>
+          <Button status={"normal"}>5</Button>
         </Link>
       )}
     </div>

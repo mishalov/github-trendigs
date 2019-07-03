@@ -17,7 +17,7 @@ export class Owner implements TOwner {
       }
     });
     this.login = param.login;
-    this.avatarUrl = param.name;
+    this.avatarUrl = param.avatarUrl;
     this.htmlUrl = param.htmlUrl;
   }
 }

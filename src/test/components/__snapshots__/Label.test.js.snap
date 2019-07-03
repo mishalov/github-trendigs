@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Label /> rendering attributes test 1`] = `
+<label
+  className="input-label test-class"
+>
+  <Button>
+    test
+  </Button>
+</label>
+`;
+
+exports[`<Label /> rendering renders correctly 1`] = `
+<label
+  className="input-label"
+>
+  test
+</label>
+`;

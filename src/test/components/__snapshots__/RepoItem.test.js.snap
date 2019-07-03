@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RepoItem /> rendering renders correctly not starred 1`] = `
+<article
+  className="repo-item"
+>
+  <header
+    className="repo-item__header"
+  >
+    <h1
+      className="repo-item__title"
+    >
+      <a
+        href="https://github.com/trevor-laher"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        trevor-laher
+      </a>
+      <span
+        className="repo-item__title-divider"
+      >
+        /
+      </span>
+      <a
+        href="https://github.com/trevor-laher/OnDemandMinecraft"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        OnDemandMinecraft
+      </a>
+    </h1>
+    <Button
+      onClick={[Function]}
+      status="normal"
+    >
+      <div
+        className="repo-item__star"
+      >
+        <img
+          alt="star"
+          height="12"
+          src="star_white.svg"
+          width="12"
+        />
+        star
+      </div>
+    </Button>
+  </header>
+  <p
+    className="repo-item__description"
+  >
+    An AWS hosted Minecraft server that will only run when players are active. Players can start the server through a simple UI accessed through free Heroku server hosting.
+  </p>
+  <Tagline
+    forks={16}
+    language="Python"
+    stargazersCount={273}
+  />
+</article>
+`;
+
+exports[`<RepoItem /> rendering renders correctly starred 1`] = `
+<article
+  className="repo-item"
+>
+  <header
+    className="repo-item__header"
+  >
+    <h1
+      className="repo-item__title"
+    >
+      <a
+        href="https://github.com/trevor-laher"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        trevor-laher
+      </a>
+      <span
+        className="repo-item__title-divider"
+      >
+        /
+      </span>
+      <a
+        href="https://github.com/trevor-laher/OnDemandMinecraft"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        OnDemandMinecraft
+      </a>
+    </h1>
+    <Button
+      onClick={[Function]}
+      status="success"
+    >
+      <div
+        className="repo-item__star"
+      >
+        <img
+          alt="star"
+          height="12"
+          src="star_white.svg"
+          width="12"
+        />
+        starred
+      </div>
+    </Button>
+  </header>
+  <p
+    className="repo-item__description"
+  >
+    An AWS hosted Minecraft server that will only run when players are active. Players can start the server through a simple UI accessed through free Heroku server hosting.
+  </p>
+  <Tagline
+    forks={16}
+    language="Python"
+    stargazersCount={273}
+  />
+</article>
+`;
